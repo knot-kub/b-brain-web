@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpStatusCode, AxiosResponse } from 'axios'
 import { AuthService, UserService } from '../services'
 
