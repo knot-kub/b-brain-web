@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GenericDeserialize } from 'cerialize'
 
 export class BaseService {
