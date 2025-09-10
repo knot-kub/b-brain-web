@@ -3,6 +3,7 @@ import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
+import { HttpClient } from "@/http/http.client";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -33,7 +34,8 @@ export default function SignInForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // Do sign in logic here
+      const { auth } =HttpClient.instance.services()
+      auth.login(email, password)
     }
   };
 

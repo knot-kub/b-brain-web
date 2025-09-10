@@ -102,11 +102,11 @@ export default class HttpManager {
   ): Promise<never> {
     // status must not in range 2xx
     const status: number = error.response?.status
-    let successCode: HttpStatusCode = HttpStatusCode.InternalServerError
+    let errorCode: HttpStatusCode = HttpStatusCode.InternalServerError
     if (status in HttpStatusCode) {
-      successCode = status
+      errorCode = status
     }
-    const executor = responseOptions[successCode] as
+    const executor = responseOptions[errorCode] as
       | ErrorResponseFunction
       | undefined
     executor?.call(this, error)

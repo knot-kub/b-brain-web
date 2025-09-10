@@ -43,7 +43,27 @@ export class HttpClient {
 
   public static get instance(): HttpClient {
     if (!this._instance) {
-      throw new Error('Please instantiate before get instance.')
+      this._instantiateOptions = {
+        private: {
+          host: process.env.API_BASE_URL || 'http://localhost:3002',
+          timeout: 10000,
+          interceptorOptions: {
+            request: {
+              tokenHandler: () => localStorage.getItem('token') || '',
+            },
+            response: {},
+          },
+        },
+        public: {
+          host: process.env.API_BASE_URL || 'http://localhost:3002',
+          timeout: 10000,
+          interceptorOptions: {
+            request: {},
+            response: {},
+          },
+        },
+      }
+      this._instance = new HttpClient()
     }
     return this._instance
   }
