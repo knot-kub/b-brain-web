@@ -10,7 +10,10 @@ export class AuthService extends BaseService {
   private baseUrl: string = '/api/v1/auth'
 
   public async login(email: string, password: string): Promise<LoginResponse> {
-    const response = await this.axios.post(this.baseUrl +'/login', { email, password })
-      return this.getResult(response.data, LoginResponse)
+    const response = await this.axios.post(this.baseUrl + '/login', {
+      email,
+      password,
+    })
+    return this.getResult(response.data, LoginResponse)
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpStatusCode, AxiosResponse } from 'axios'
-import { AuthService, UserService } from '../services'
+import { AuthService, MeService, UserService } from '../services'
 
 export interface InterceptorOptions {
   request: RequestOptions
@@ -51,4 +51,5 @@ export interface InstantiateOption {
 export interface Services {
   auth: AuthService
   user: UserService
+  me: MeService
 }
