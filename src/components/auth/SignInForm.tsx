@@ -1,45 +1,42 @@
-"use client";
-import Checkbox from "@/components/form/input/Checkbox";
-import Input from "@/components/form/input/InputField";
-import Label from "@/components/form/Label";
-import Button from "@/components/ui/button/Button";
-import { HttpClient } from "@/http/http.client";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client'
+import Checkbox from '@/components/form/input/Checkbox'
+import Input from '@/components/form/input/InputField'
+import Label from '@/components/form/Label'
+import Button from '@/components/ui/button/Button'
+import { useAuth } from '@/hooks'
+import { HttpClient } from '@/http/http.client'
+import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '@/icons'
+import Link from 'next/link'
+import React, { useState } from 'react'
 
 export default function SignInForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {},
-  );
+  )
+  const { validator, login } = useAuth()
 
   const validate = () => {
-    const newErrors: { email?: string; password?: string } = {};
-    if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Email is invalid (example: test@example.com)";
-    }
-    if (!password) {
-      newErrors.password = "Password is required";
-    } else if (password.length < 8) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    const newErrors: { email?: string; password?: string } = {}
+    const emailError = validator.email(email)
+    const passwordError = validator.password(password)
+    if (emailError) newErrors.email = emailError
+    if (passwordError) newErrors.password = passwordError
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (validate()) {
-      const { auth } = HttpClient.instance.services();
-      auth.login(email, password);
+      // const { auth } = HttpClient.instance.services()
+      // auth.login(email, password)
+      login(email, password)
     }
-  };
+  }
 
   return (
     <div className="flex w-full flex-1 flex-col lg:w-1/2">
@@ -119,7 +116,7 @@ export default function SignInForm() {
               <div className="space-y-6">
                 <div>
                   <Label>
-                    Email <span className="text-error-500">*</span>{" "}
+                    Email <span className="text-error-500">*</span>{' '}
                   </Label>
                   <Input
                     placeholder="info@gmail.com"
@@ -135,11 +132,11 @@ export default function SignInForm() {
                 </div>
                 <div>
                   <Label>
-                    Password <span className="text-error-500">*</span>{" "}
+                    Password <span className="text-error-500">*</span>{' '}
                   </Label>
                   <div className="relative">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
                       defaultValue={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -185,7 +182,7 @@ export default function SignInForm() {
 
             <div className="mt-5">
               <p className="text-center text-sm font-normal text-gray-700 sm:text-start dark:text-gray-400">
-                Don&apos;t have an account? {""}
+                Don&apos;t have an account? {''}
                 <Link
                   href="/signup"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
@@ -198,5 +195,5 @@ export default function SignInForm() {
         </div>
       </div>
     </div>
-  );
+  )
 }

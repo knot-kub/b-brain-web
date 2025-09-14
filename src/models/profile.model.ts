@@ -1,12 +1,12 @@
-import { serializeAs } from "cerialize";
+import { serializeAs } from 'cerialize'
 
 export class Profile {
-  @serializeAs("email")
-  email!: string;
+  @serializeAs('email')
+  email!: string
 
-  @serializeAs("firstName")
-  firstName!: string;
+  @serializeAs('firstName')
+  firstName!: string
 
-  @serializeAs("lastName")
-  lastName!: string;
+  @serializeAs('lastName')
+  lastName!: string
 }

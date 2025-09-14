@@ -2,6 +2,7 @@ import { AxiosInstance } from 'axios'
 import { InstantiateOptions, Services } from './http.interface'
 import HttpManager from './http.manager'
 import { AuthService, UserService } from '../services'
+import { MeService } from '@/services/me.service'
 
 export class HttpClient {
   private static _instance: HttpClient
@@ -29,6 +30,7 @@ export class HttpClient {
     this._services = {
       auth: new AuthService(this._publicAxios),
       user: new UserService(this._privateAxios),
+      me: new MeService(this._privateAxios),
     }
   }
 
